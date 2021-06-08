@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nag_graph"
+    app:startDestination="@id/pictureOfTheDayFragment">
+
+    <fragment
+        android:id="@+id/pictureOfTheDayFragment"
+        android:name="com.headmostlab.materialdesignapp.ui.main.PictureOfTheDayFragment"
+        android:label="picture_of_the_day_fragment"
+        tools:layout="@layout/picture_of_the_day_fragment" >
+        <action
+            android:id="@+id/action_pictureOfTheDayFragment_to_chipsFragment"
+            app:destination="@id/chipsFragment" />
+        <action
+            android:id="@+id/action_pictureOfTheDayFragment_to_bottomNavigationDrawerFragment"
+            app:destination="@id/bottomNavigationDrawerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chipsFragment"
+        android:name="com.headmostlab.materialdesignapp.ui.chips.ChipsFragment"
+        android:label="ChipsFragment" />
+    <dialog
+        android:id="@+id/bottomNavigationDrawerFragment"
+        android:name="com.headmostlab.materialdesignapp.ui.main.BottomNavigationDrawerFragment"
+        android:label="BottomNavigationDrawerFragment" />
+</navigation>

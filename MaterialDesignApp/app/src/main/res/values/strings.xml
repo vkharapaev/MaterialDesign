@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MaterialDesignApp</string>
+    <string name="search_wiki">Search wiki</string>
+    <string name="wiki_helper_text">Wiki Helper Text</string>
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="to_screen_one">To Screen One</string>
+    <string name="to_screen_two">To Screen Two</string>
+    <string name="search">Search</string>
 </resources>
