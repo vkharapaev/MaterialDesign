@@ -14,15 +14,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_margin"
             android:hint="@string/search_wiki"
-            app:boxCornerRadiusBottomEnd="0dp"
-            app:boxCornerRadiusBottomStart="0dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconCheckable="true"
@@ -56,14 +51,14 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 days ago" />
+                android:text="@string/picture_of_2_days_ago" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/yesterdayChip"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yesterday" />
+                android:text="@string/picture_of_yesterday" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/todayChip"
@@ -71,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Today" />
+                android:text="@string/picture_of_today" />
 
         </com.google.android.material.chip.ChipGroup>
 

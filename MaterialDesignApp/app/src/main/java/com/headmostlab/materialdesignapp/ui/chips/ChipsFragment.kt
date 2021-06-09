@@ -2,28 +2,34 @@ package com.headmostlab.materialdesignapp.ui.chips
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.chip.Chip
+import androidx.preference.PreferenceManager
 import com.headmostlab.materialdesignapp.R
 import com.headmostlab.materialdesignapp.databinding.ChipsFragmentBinding
 import com.headmostlab.materialdesignapp.ui.utils.viewBinding
 
 class ChipsFragment : Fragment(R.layout.chips_fragment) {
 
+    companion object {
+        private const val IS_LIGHT = "IS_LIGHT"
+    }
+
     private val binding by viewBinding(ChipsFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.chipGroup2.setOnCheckedChangeListener { chipGroup, checkedId ->
-            binding.chipGroup2.findViewById<Chip>(checkedId)?.let {
-                Toast.makeText(requireContext(), "Chosen ${it.text}", Toast.LENGTH_SHORT).show()
+
+        val sharePreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val isLight = sharePreferences.getBoolean(IS_LIGHT, false)
+
+        binding.themeGroup.check(if (isLight) R.id.lightThemeChip else R.id.darkThemeChip)
+
+        binding.themeGroup.setOnCheckedChangeListener { chipGroup, checkedId ->
+            val isLightChecked = when (checkedId) {
+                R.id.lightThemeChip -> true
+                else -> false
             }
-        }
-        binding.chipClose.setOnCloseIconClickListener {
-            Toast.makeText(requireContext(), "Close is clicked", Toast.LENGTH_SHORT).show()
-        }
-        binding.chipClose.setOnCheckedChangeListener { buttonView, isChecked ->
-            Toast.makeText(requireContext(), "isChecked = $isChecked", Toast.LENGTH_SHORT).show()
+            sharePreferences.edit().putBoolean(IS_LIGHT, isLightChecked).apply()
+            requireActivity().recreate()
         }
     }
 }

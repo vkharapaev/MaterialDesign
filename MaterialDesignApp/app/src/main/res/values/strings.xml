@@ -7,4 +7,10 @@
     <string name="to_screen_one">To Screen One</string>
     <string name="to_screen_two">To Screen Two</string>
     <string name="search">Search</string>
+    <string name="select_app_theme">Select app theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="picture_of_2_days_ago">2 days ago</string>
+    <string name="picture_of_yesterday">Yesterday</string>
+    <string name="picture_of_today">Today</string>
 </resources>
