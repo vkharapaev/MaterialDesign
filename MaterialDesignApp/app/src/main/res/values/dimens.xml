@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="no_margin">0dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="bottom_sheet_peek_height">100dp</dimen>
     <dimen name="large_margin">16dp</dimen>
