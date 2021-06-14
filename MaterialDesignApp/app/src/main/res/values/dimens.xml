@@ -4,4 +4,5 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="bottom_sheet_peek_height">100dp</dimen>
     <dimen name="large_margin">16dp</dimen>
+    <dimen name="circle_indicator_height">48dp</dimen>
 </resources>
