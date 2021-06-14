@@ -9,18 +9,25 @@
         android:id="@+id/pictureOfTheDayFragment"
         android:name="com.headmostlab.materialdesignapp.ui.main.PictureOfTheDayFragment"
         android:label="picture_of_the_day_fragment"
-        tools:layout="@layout/picture_of_the_day_fragment" >
+        tools:layout="@layout/picture_of_the_day_fragment">
         <action
-            android:id="@+id/action_pictureOfTheDayFragment_to_chipsFragment"
-            app:destination="@id/chipsFragment" />
+            android:id="@+id/action_pictureOfTheDayFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
         <action
             android:id="@+id/action_pictureOfTheDayFragment_to_bottomNavigationDrawerFragment"
             app:destination="@id/bottomNavigationDrawerFragment" />
+        <action
+            android:id="@+id/action_pictureOfTheDayFragment_to_planetsFragment"
+            app:destination="@+id/planetsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/chipsFragment"
-        android:name="com.headmostlab.materialdesignapp.ui.chips.ChipsFragment"
+        android:id="@+id/settingsFragment"
+        android:name="com.headmostlab.materialdesignapp.ui.settings.SettingsFragment"
         android:label="ChipsFragment" />
+    <fragment
+        android:id="@+id/planetsFragment"
+        android:name="com.headmostlab.materialdesignapp.ui.space.SpaceViewFragment"
+        android:label="PlanetsFragment" />
     <dialog
         android:id="@+id/bottomNavigationDrawerFragment"
         android:name="com.headmostlab.materialdesignapp.ui.main.BottomNavigationDrawerFragment"

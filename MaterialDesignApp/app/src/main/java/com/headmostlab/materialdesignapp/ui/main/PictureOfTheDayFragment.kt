@@ -8,7 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -24,7 +24,6 @@ import com.headmostlab.materialdesignapp.databinding.PictureOfTheDayFragmentBind
 import com.headmostlab.materialdesignapp.ui.utils.showSnackbar
 import com.headmostlab.materialdesignapp.ui.utils.viewBinding
 import com.headmostlab.materialdesignapp.utils.DateTimeUtils
-import java.time.LocalDate
 import java.util.*
 
 class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
@@ -50,16 +49,42 @@ class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
         viewModel.getData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        binding.inputLayout.setEndIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data =
-                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
-            })
-        }
+        setUpEditText()
         setBottomSheetBehavior(binding.bottomSheet.bottomSheet)
         setUpBottomAppBar()
         setUpFab()
         setUpChipGroup()
+        setUpWebView()
+    }
+
+    private fun setUpWebView() {
+        val webViewSettings = binding.webView.settings
+        webViewSettings.javaScriptEnabled = true
+        webViewSettings.javaScriptCanOpenWindowsAutomatically = true
+    }
+
+    private fun setUpEditText() {
+        binding.inputLayout.setEndIconOnClickListener {
+            searchInWiki()
+        }
+        binding.inputEditText.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    searchInWiki()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun searchInWiki() {
+        val searchText = binding.inputEditText.text.toString()
+        if (searchText.isBlank()) return
+        startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data =
+                Uri.parse("https://en.wikipedia.org/wiki/${searchText.toString()}")
+        })
     }
 
     private fun setUpChipGroup() {
@@ -115,12 +140,22 @@ class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
                 if (url.isNullOrEmpty()) {
                     showError(Throwable("Url is null"))
                 } else {
-                    binding.imageView.load(url) {
-                        lifecycle(this@PictureOfTheDayFragment)
-                        error(R.drawable.ic_load_error_vector)
-                        placeholder(R.drawable.ic_no_photo_vector)
+                    binding.imageView.visibility = View.INVISIBLE
+                    binding.webView.visibility = View.INVISIBLE
+                    binding.webView.loadUrl("about:blank")
+                    if (data.serverResponseData.media_type == "video") {
+                        binding.webView.visibility = View.VISIBLE
+                        binding.webView.loadUrl(url)
+                    } else {
+                        binding.imageView.visibility = View.VISIBLE
+                        binding.imageView.load(url) {
+                            lifecycle(this@PictureOfTheDayFragment)
+                            error(R.drawable.ic_load_error_vector)
+                            placeholder(R.drawable.ic_no_photo_vector)
+                        }
                     }
                 }
+
                 with(binding.bottomSheet) {
                     bottomSheetDescriptionHeader.text = serverResponseData.title
                     bottomSheetDescription.text = serverResponseData.explanation
@@ -136,7 +171,7 @@ class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
     }
 
     private fun showLoading(progress: Int?) {
-        Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
     }
 
     private fun showError(error: Throwable) {
@@ -187,13 +222,14 @@ class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController()
         when (item.itemId) {
-            R.id.app_bar_fav -> Toast.makeText(requireContext(), "Favorite", Toast.LENGTH_SHORT)
-                .show()
+            R.id.app_bar_plantes ->
+                navController.navigate(R.id.action_pictureOfTheDayFragment_to_planetsFragment)
             R.id.app_bar_settings ->
-                findNavController().navigate(R.id.action_pictureOfTheDayFragment_to_chipsFragment)
+                navController.navigate(R.id.action_pictureOfTheDayFragment_to_settingsFragment)
             android.R.id.home ->
-                findNavController().navigate(R.id.action_pictureOfTheDayFragment_to_bottomNavigationDrawerFragment)
+                navController.navigate(R.id.action_pictureOfTheDayFragment_to_bottomNavigationDrawerFragment)
         }
         return super.onOptionsItemSelected(item)
     }
