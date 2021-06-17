@@ -21,6 +21,8 @@ class SpaceViewFragment : Fragment(R.layout.space_view_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menu = binding.bottomNavigation.menu
 
+
+        binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = ViewPagerAdapter(this, menu)
         binding.circleIndicator.setViewPager(binding.viewPager)
 

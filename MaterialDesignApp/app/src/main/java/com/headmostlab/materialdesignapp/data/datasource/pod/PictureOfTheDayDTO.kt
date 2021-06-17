@@ -1,8 +1,8 @@
-package com.headmostlab.materialdesignapp.data.datasource
+package com.headmostlab.materialdesignapp.data.datasource.pod
 
 import com.google.gson.annotations.SerializedName
 
-data class PODServerResponseData(
+data class PictureOfTheDayDTO(
     @field:SerializedName("copyright") val copyright: String?,
     @field:SerializedName("data") val data: String?,
     @field:SerializedName("explanation") val explanation: String?,

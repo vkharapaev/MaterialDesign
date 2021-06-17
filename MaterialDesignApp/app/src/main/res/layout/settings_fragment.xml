@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/large_margin"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ui.settings.SettingsFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_app_theme"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:layout_margin="@dimen/large_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".ui.settings.SettingsFragment">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/themeGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/lightThemeChip"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/light" />
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="@string/select_app_theme"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/darkThemeChip"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/themeGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dark" />
+            android:layout_marginTop="@dimen/small_margin"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/lightThemeChip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/light" />
 
-</LinearLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/darkThemeChip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dark" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+</FrameLayout>

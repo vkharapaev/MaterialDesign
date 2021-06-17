@@ -1,4 +1,4 @@
-package com.headmostlab.materialdesignapp.data.datasource
+package com.headmostlab.materialdesignapp.data.datasource.pod
 
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -10,5 +10,5 @@ interface PictureOfTheDayApi {
     fun getPictureOfTheDay(
         @Query("api_key") apiKey: String,
         @Query("date") date: String? = null
-    ): Single<PODServerResponseData>
+    ): Single<PictureOfTheDayDTO>
 }
