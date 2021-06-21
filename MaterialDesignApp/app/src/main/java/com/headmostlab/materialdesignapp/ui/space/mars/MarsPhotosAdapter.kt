@@ -5,10 +5,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.headmostlab.materialdesignapp.domain.entity.MarsPhoto
 
-class MarsPhotosAdapter : ListAdapter<MarsPhoto, MarsPhotoViewHolder>(DIFF_CALLBACK) {
+class MarsPhotosAdapter(private val clickListener: (Int) -> Unit) :
+    ListAdapter<MarsPhoto, MarsPhotoViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarsPhotoViewHolder =
-        MarsPhotoViewHolder.create(parent)
+        MarsPhotoViewHolder.create(parent, clickListener)
 
     override fun onBindViewHolder(holder: MarsPhotoViewHolder, position: Int) {
         holder.bind(getItem(position))

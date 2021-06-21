@@ -2,30 +2,40 @@ package com.headmostlab.materialdesignapp.ui.space.mars
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.request.Disposable
+import com.bumptech.glide.Glide
+import com.headmostlab.materialdesignapp.App
 import com.headmostlab.materialdesignapp.R
 import com.headmostlab.materialdesignapp.databinding.MarsPhotoItemBinding
 import com.headmostlab.materialdesignapp.domain.entity.MarsPhoto
 
-class MarsPhotoViewHolder(val binding: MarsPhotoItemBinding) :
+class MarsPhotoViewHolder(
+    private val binding: MarsPhotoItemBinding,
+    private val clickListener: (Int) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private var disposable: Disposable? = null
-
     fun bind(marsPhoto: MarsPhoto) {
-        disposable = binding.image.load(marsPhoto.imgSrc) {
+
+        Glide.with(App.instance)
+            .load(marsPhoto.imgSrc)
+            .placeholder(R.drawable.ic_no_photo_vector)
+            .into(binding.image)
+
+        binding.image.setOnClickListener {
+            clickListener(adapterPosition)
         }
     }
 
     fun recycled() {
-        disposable?.dispose()
+        Glide.with(App.instance).clear(binding.image)
     }
 
     companion object {
-        fun create(parent: ViewGroup): MarsPhotoViewHolder =
-            MarsPhotoViewHolder(MarsPhotoItemBinding.inflate(LayoutInflater.from(parent.context)))
+        fun create(parent: ViewGroup, clickListener: (Int) -> Unit): MarsPhotoViewHolder =
+            MarsPhotoViewHolder(
+                MarsPhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                clickListener
+            )
     }
 }
