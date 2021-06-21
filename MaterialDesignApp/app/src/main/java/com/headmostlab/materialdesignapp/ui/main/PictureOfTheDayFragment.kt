@@ -15,9 +15,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.headmostlab.materialdesignapp.App
 import com.headmostlab.materialdesignapp.DI
 import com.headmostlab.materialdesignapp.R
 import com.headmostlab.materialdesignapp.databinding.PictureOfTheDayFragmentBinding
@@ -148,11 +150,13 @@ class PictureOfTheDayFragment : Fragment(R.layout.picture_of_the_day_fragment) {
                         binding.webView.loadUrl(url)
                     } else {
                         binding.imageView.visibility = View.VISIBLE
-                        binding.imageView.load(url) {
-                            lifecycle(this@PictureOfTheDayFragment)
-                            error(R.drawable.ic_load_error_vector)
-                            placeholder(R.drawable.ic_no_photo_vector)
-                        }
+
+                        Glide.with(App.instance)
+                            .load(url)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .error(R.drawable.ic_load_error_vector)
+                            .placeholder(R.drawable.ic_no_photo_vector)
+                            .into(binding.imageView)
                     }
                 }
 
