@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         val isLightTheme = DI.appComponent.getSettingsRepository().isLightTheme()
         setTheme(if (isLightTheme) R.style.Theme_Light else R.style.Theme_Dark)
         setContentView(R.layout.main_activity)
+        
     }
 
 }
