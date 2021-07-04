@@ -13,6 +13,8 @@ import javax.inject.Inject
 class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPhotosRepository) :
     ViewModel() {
 
+    private val photosData = mutableListOf<MarsPhotoUi>()
+
     private val _photos: MutableLiveData<MarsPhotosState> = MutableLiveData()
     val photos: LiveData<MarsPhotosState>
         get() {
@@ -31,8 +33,13 @@ class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPh
         _photos.value = MarsPhotosState.Loading
 
         marsPhotosRepository.getLatestPhotos(BuildConfig.NASA_API_KEY)
-            .subscribe({
-                _photos.value = MarsPhotosState.Success(it)
+            .subscribe({ data ->
+                val uiData = data.map { MarsPhotoUi(it, false) }
+                photosData.apply {
+                    clear()
+                    addAll(uiData)
+                }
+                _photos.value = MarsPhotosState.Success(uiData)
             }, {
                 _photos.value = MarsPhotosState.Error(it)
             }).also { disposables.add(it) }
@@ -42,9 +49,32 @@ class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPh
         val success = _photos.value as? MarsPhotosState.Success
         success?.let {
             success.data.getOrNull(position)?.let {
-                _onShowPicture.value = Event(it)
+                _onShowPicture.value = Event(it.photo)
             }
         }
     }
 
+    fun removeItem(position: Int) {
+        photosData.removeAt(position)
+        notifyPhotosChanged()
+    }
+
+    private fun notifyPhotosChanged() {
+        _photos.value =
+            MarsPhotosState.Success(arrayListOf<MarsPhotoUi>().apply { addAll(photosData) })
+    }
+
+    fun move(fromPosition: Int, toPosition: Int) {
+        photosData[fromPosition] = photosData[toPosition]
+            .also { photosData[toPosition] = photosData[fromPosition] }
+        notifyPhotosChanged()
+    }
+
+    fun showDescription(position: Int) {
+        val old = photosData[position]
+
+        photosData[position] = old.copy(isDescriptionVisible = !old.isDescriptionVisible)
+
+        notifyPhotosChanged()
+    }
 }
