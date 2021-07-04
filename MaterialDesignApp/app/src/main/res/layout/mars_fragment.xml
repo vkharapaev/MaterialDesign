@@ -32,11 +32,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/photos_recycler_view"
+            android:background="@android:color/darker_gray"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:spanCount="2" />
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -47,7 +47,7 @@
         android:background="?attr/colorPrimary"
         android:visibility="invisible"
         app:srcCompat="@drawable/bg_earth"
-        tools:visibility="visible" />
+        tools:visibility="invisible" />
 
 </FrameLayout>
 

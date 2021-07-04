@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -37,7 +38,26 @@ class MarsFragment : Fragment(R.layout.mars_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        adapter = MarsPhotosAdapter { viewModel.selectPhoto(it) }
+        adapter = MarsPhotosAdapter(object : MarsPhotosAdapter.OnItemListener {
+            override fun onClick(position: Int) {
+                viewModel.selectPhoto(position)
+            }
+
+            override fun onDelete(position: Int) {
+                Toast.makeText(context, "delete $position", Toast.LENGTH_SHORT).show()
+                viewModel.removeItem(position)
+            }
+
+            override fun onMove(fromPosition: Int, toPosition: Int) {
+                viewModel.move(fromPosition, toPosition)
+            }
+
+            override fun onShowDescription(position: Int) {
+                viewModel.showDescription(position)
+            }
+        })
+
+        adapter?.itemTouchHelper?.attachToRecyclerView(binding.photosRecyclerView)
 
         binding.photosRecyclerView.adapter = adapter
 
